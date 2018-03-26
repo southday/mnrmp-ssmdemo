@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>下载收藏点赞</title>
+<script type="text/javascript">
+function changeForm(type) {
+	var myform = document.getElementById("myform");
+	var myaction = document.getElementById("myaction");
+	switch (type) {
+	case 1:
+		myform.action = "/MNRMP/user/downloadVideo.do";
+		myaction.value = "下载";
+		break;
+	case 2:
+		myform.action = "/MNRMP/user/collectVideo.do";
+		myaction.value = "收藏";
+		break;
+	case 3:
+		myform.action = "/MNRMP/user/praiseVideo.do";
+		myaction.value = "点赞";
+		break;
+	}
+}
+</script>
+</head>
+<body>
+	<button onclick="changeForm(1)">我要下载</button>
+	<button onclick="changeForm(2)">我要收藏</button>
+	<button onclick="changeForm(3)">我要点赞</button>
+	<form id="myform" action="/MNRMP/user/downloadVideo.do" method="post">
+		视频id:<input type="text" name="videoId" value="" /><br />
+		目录id:<input type="text" name="catalogId" value="" /><br />
+		<input id="myaction" type="submit" value="下载" />
+	</form>
+</body>
+</html>

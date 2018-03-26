@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//myabtis.org/DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 全局setting配置，可根据需要再添加其他配置-->
+	
+	<!-- 配置别名 -->
+	<typeAliases>
+		<!-- 批量扫描别名 -->
+		<package name="southday.mnrmp.po"/>
+	</typeAliases>
+	
+	<!-- 配置mapper
+	1) 由于使用spring和myabtis的整合进行mapper扫描，这里不需要配置了
+	2) 必须遵循：mapper.xml和mapper.java文件名相同且在同一个目录
+	-->
+	<!-- <mappers> </mappers> -->
+</configuration>

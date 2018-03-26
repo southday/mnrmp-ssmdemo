@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的记录</title>
+<script type="text/javascript">
+function changeRecordType(type) {
+	var myForm = document.getElementById("myform");
+	switch (type) {
+	case 1:
+		myForm.action = "/MNRMP/user/myDownloads.do";
+		break;
+	case 2:
+		myForm.action = "/MNRMP/user/myCollects.do";
+		break;
+	case 3:
+		myForm.action = "/MNRMP/user/myPraises.do";
+		break;
+	}
+}
+
+</script>
+</head>
+<body>
+	记录类型:
+	<button onclick="changeRecordType(1)">下赞记录</button>
+	<button onclick="changeRecordType(2)">收藏记录</button>
+	<button onclick="changeRecordType(3)">点赞记录</button>
+<!-- 	<select name="recordType" onchange="changeRecordType(this.options[this.options.selectedIndex].value)">
+		<option value="1">下载记录</option>
+		<option value="2">收藏记录</option>
+		<option value="3">点赞记录</option> 
+	</select>
+ -->	<form id="myform" action="/MNRMP/user/myDownloads.do" method="get">
+		当前页面：
+		<input type="radio" name="curPageNo" value="1" />第1页 
+		<input type="radio" name="curPageNo" value="2" />第2页 
+		<input type="radio" name="curPageNo" value="3" />第3页 
+		<input type="radio" name="curPageNo" value="4" />第4页 
+		<input type="radio" name="curPageNo" value="5" />第5页<br />
+		搜索关键字:<input type="text" name="searchKeyword" value="" /><br />
+		<input type="submit" value="获取记录" />
+	</form>
+</body>
+</html>

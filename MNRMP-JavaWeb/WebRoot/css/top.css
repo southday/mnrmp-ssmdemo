@@ -1,0 +1,8 @@
+body{padding: 0px;margin: 0px;}
+.top_left{
+	height: 80px;
+	background-color:  #DBCBB8;
+	border-right: 1px solid #DBCBB8;
+	padding: 0px;
+	width: 201px;
+}

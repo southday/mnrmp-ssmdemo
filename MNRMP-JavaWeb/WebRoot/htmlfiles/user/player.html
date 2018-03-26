@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="/MNRMP/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="/MNRMP/css/bootstrap.min.css"> 
+<script type="text/javascript" src="/MNRMP/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/mnrmp.js"></script>
+<script type="text/javascript" src="/MNRMP/js/login.js"></script>
+<script type="text/javascript" src="/MNRMP/js/data-request.js"></script>
+<script type="text/javascript" src="/MNRMP/ckplayer/ckplayer.js" charset="utf-8"></script>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+<body onload="playerPage()">
+<div class="container-fluid" style="margin-top:20px;">
+
+	<div class="row-fluid">
+	<div class="col-md-5">
+	<a href="/MNRMP/index.html"><img src="/MNRMP/images/mnrmp.png" alt="网站图标" height="50" width="100"></a>
+		</div>
+		<div class="col-md-4">
+		<form name="serachform" class="bs-example bs-example-form" role="form" method="get" 
+		action="/MNRMP/htmlfiles/user/searchResult.html"> 
+        <div class="input-group" > 
+            <input id="searchKey" name="searchKey" type="text" required="required" class="form-control"> 
+            <span class="input-group-addon" onclick="submitform()">搜索</span>
+        </div> 
+    </form> 
+		</div>
+		<div class="col-md-3">
+		<ol id="navbar" class="breadcrumb">
+	    <li><a data-toggle="modal" data-target="#myModal">登录</a></li>
+	    <li><a href="/MNRMP/htmlfiles/user/register.html" >注册</a></li>
+	    <li><a href="/MNRMP/htmlfiles/user/upload.html">上传视频</a></li>
+        </ol>
+
+        <!--登录弹窗-->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					用户登录
+				</h4>
+			</div>
+			<div class="modal-body">
+	<form id="loginform" class="form-horizontal" role="form" action="/MNRMP/user/login.do"> 
+    <div class="form-group"> 
+        <label for="account"  class="col-sm-2 control-label">用户名</label> 
+        <div class="col-sm-6"> 
+            <input type="text" required="required" class="form-control" name="account" placeholder="用户账号/电子邮箱"> 
+        </div> 
+    </div> 
+    <div class="form-group"> 
+        <label for="password"  class="col-sm-2 control-label">密码</label> 
+        <div class="col-sm-6"> 
+            <input type="password" required="required" class="form-control" name="password" placeholder="密码">
+        </div> 
+    </div> 
+
+    <div class="form-group"> 
+        <label for="jcaptcha" class="col-sm-2 control-label">验证码</label> 
+        <div class="col-sm-3"> 
+            <input type="text" required="required" class="form-control" name="jcaptcha" placeholder="验证码">
+        </div> 
+        <img class="col-sm-6" id="verifyCodeImg" data-container="form[id='loginform']" data-toggle="popover" data-placement="top" data-trigger="hover"
+            data-content="点击更换验证码" src="/MNRMP/jcaptcha.jpg">
+    </div> 
+      <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rememberMe">10天内自动登录
+        </label>
+      </div>
+    </div>
+  </div>
+    <a href="#" style="float:left;margin-left:20px;font-size:20px;">忘记密码?</a>
+    <a href="/MNRMP/htmlfiles/user/register.html" style="float:left;margin-left:50px;font-size:20px;">注册</a>
+	<input type="submit" class="btn btn-success" style="margin-left:90px;">
+
+   </form>
+
+			</div>
+			
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+	</div>
+	</div>
+</div>
+</div>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-12">
+	<hr>
+</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+	    <div class="col-md-1">
+	    
+	    </div>
+		<div class="col-md-9">
+		
+          <div class="row-fluid">
+          	<div class="col-sm-12">
+          		<!--播放器所在区域-->
+          		<div id="a1" style="height:530px;"></div>
+          	</div>
+          </div>
+
+		</div>
+		<div class="col-md-2">
+	    <p id="title" style="height:40px;font-size:16px;"><strong>title</strong></p>
+	    <p ><span class="text-warning"><em>上传者:<em></em></span><span id="uploader"></span></p>
+	    <div style="height:350px;">
+	    <p class="text-warning"><em>详细介绍:</em></p>
+	    <div id="detail">
+	    </div>
+	    </div> 
+	    <div style="height:80px;">
+	    <button class="btn btn-link" style="font-size:20px;" onclick="download()"><span class="glyphicon glyphicon-download-alt"></span>下载</button>
+        <button class="btn btn-link" style="font-size:20px;" onclick="collection()"><span id="collection" class="glyphicon glyphicon-star-empty" style="color: rgb(255, 195, 0);"></span>收藏</button>
+        <button class="btn btn-link" style="font-size:20px;" onclick="praise()"><span id="like" class="glyphicon glyphicon-thumbs-up" ></span><span id="praiseNum">444</span></button>
+        <button class="btn btn-link" id="dislikeBtn" style="font-size:20px;"  onclick="Dislike()"><span id="dislike" class="glyphicon glyphicon-thumbs-down"></span><span id="dislikeNum">4</span></button>
+	    </div> 
+	    </div>
+		</div>
+		</div>
+
+<script type="text/javascript">
+
+var p=decodeURI(document.URL).split("?")[1];
+var videoId=p.split("&")[0];
+var isCommon=(p.split("&")[1]).split("=")[1];
+  function playerPage(){
+    checkLoginStatus();
+  	//alert(isCommon+":"+videoId);
+  	if (isCommon==1) {
+  		var url="/MNRMP/common/getVideo.do";
+  	}else{
+  		var url="/MNRMP/user/getVideo.do";
+  	}
+  	postRequest(url,videoId,fn);
+  }
+ var fn=function getVideoInfo(data){
+ 	
+ 	data=eval("("+data+")");
+    document.getElementById("title").innerHTML="<strong>"+data.videoTitle+"</strong>";
+    document.getElementById("detail").innerHTML=data.intro;
+    document.getElementById("uploader").innerHTML=data.userName;
+ 
+   var videoUrl="/MNRMP/videopic/videos/"+data.videoName;
+   sessionStorage.setItem("videoUrl",videoUrl);
+     <!--缩略图url-->
+    var imgUrl="/MNRMP/videopic/pics/"+data.miniatureName;
+	var flashvars={
+		f:videoUrl,
+		c:0,
+		b:1,
+		i:imgUrl,
+		my_url:encodeURIComponent(window.location.href)
+		};
+	var video=[videoUrl+'->video/mp4'];
+	CKobject.embed('/MNRMP/ckplayer/ckplayer.swf','a1','ckplayer_a1','960','520',false,flashvars,video);
+ }
+
+//登录状态
+    var loginStatus=getCookie("loginStatus");
+//下载视频
+	function download(){
+		if (loginStatus) {
+			//重定向到下载地址
+			var url="/MNRMP/user/downloadVideo.do";
+			postRequest(url,videoId,fd);
+			
+		}else{
+           $('#myModal').modal('show');
+		}
+	}
+    var fd=function downloadVideo(data){
+        data=eval("("+data+")");
+    	window.location.href=sessionStorage.getItem("videoUrl");
+    }
+ 
+    //收藏
+    var collectionStatus=false;
+    var like=false;
+    var dislike=false;
+	function collection(){
+     if (true) {
+      if(!collectionStatus){
+	 	document.getElementById("collection").className="glyphicon glyphicon-star";
+	 	collectionStatus=true;
+	 }else{
+	 	document.getElementById("collection").className="glyphicon glyphicon-star-empty";
+	 	collectionStatus=false;
+	 }	
+		}else{
+           $('#myModal').modal('show');
+		}
+	}
+
+//点赞
+   function praise(){
+   	var pr=document.getElementById("praiseNum");
+ if (true) {
+      if(!like){
+	 	document.getElementById("like").style.color="rgb(255, 195, 0)";
+	 	
+	 	pr.innerHTML=parseInt(pr.innerHTML)+1;
+	 	like=true;
+	 }else{
+	 	document.getElementById("like").style.color="rgb(128, 128, 255)";
+	 	like=false;
+	 	pr.innerHTML=parseInt(pr.innerHTML)-1;
+	 }	
+		}else{
+           $('#myModal').modal('show');
+		}
+	}  
+  	function Dislike(){
+  		
+  	var dis=document.getElementById("dislikeNum");
+    if (true) {
+      if(!dislike){
+	 	document.getElementById("dislike").style.color="rgb(255, 195, 0)";
+	 	dis.innerHTML=parseInt(dis.innerHTML)+1;
+	 	dislike=true;
+	 }else{
+	 	document.getElementById("dislike").style.color="rgb(128, 128, 255)";
+	 	dis.innerHTML=parseInt(dis.innerHTML)-1;
+	 	dislike=false;
+	 }	
+		}else{
+           $('#myModal').modal('show');
+		}
+	}
+
+
+ <!--视频url-->
+    	
+	
+</script>
+
+</body>
+</html>

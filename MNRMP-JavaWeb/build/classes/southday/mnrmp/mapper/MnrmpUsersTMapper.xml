@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="southday.mnrmp.mapper.MnrmpUsersTMapper" >
+	<resultMap type="southday.mnrmp.po.MnrmpUsersT" id="user_resultmap">
+		<id column="user_id" property="userId" />
+		<result column="role_id" property="roleId" />
+		<result column="account" property="account" />
+		<result column="user_name" property="userName" />
+		<result column="birthday" property="birthday" />
+		<result column="sex" property="sex" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="password" property="password" />
+		<result column="regist_date" property="registDate" />
+		<result column="head_portrait_name" property="headPortraitName" />
+		<result column="is_valid" property="isValid" />
+		<result column="is_activated" property="isActivated" />
+		<result column="activate_code" property="activateCode" />
+	</resultMap>
+	
+	<!-- 根据id查询用户详细信息 -->
+	<select id="findUserById" parameterType="java.lang.Integer" resultMap="user_resultmap">
+		SELECT user_id, role_id, account, user_name, birthday, sex, email, phone, regist_date, head_portrait_name
+		FROM mnrmp_users_t
+		WHERE user_id = #{userId}
+	</select>
+	
+	<!-- 根据id和password判断用户是否存在 -->
+	<select id="findUserExistsByIdPassword" parameterType="southday.mnrmp.po.MnrmpUsersT" resultType="java.lang.Boolean">
+		SELECT COUNT(*)
+		FROM mnrmp_users_t
+		WHERE user_id = #{userId}
+		AND password = #{password}
+	</select>
+	
+	<!-- 根据用户账号account和密码password查找用户user -->
+	<select id="findUserByAccountPassword" parameterType="southday.mnrmp.po.MnrmpUsersT" resultMap="user_resultmap">
+		SELECT user_id, role_id, account, user_name, birthday, sex, email, phone, regist_date, head_portrait_name, is_valid, is_activated
+		FROM mnrmp_users_t
+		WHERE account = #{account}
+		AND password = #{password}
+	</select>
+	
+	<!-- 根据用户email和密码password查找用户user -->
+	<select id="findUserByEmailPassword" parameterType="southday.mnrmp.po.MnrmpUsersT" resultMap="user_resultmap">
+		SELECT user_id, role_id, account, user_name, birthday, sex, email, phone, regist_date, head_portrait_name, is_valid, is_activated
+		FROM mnrmp_users_t
+		WHERE email = #{email}
+		AND password = #{password}
+	</select>
+	
+	<!-- 根据用户account查找用户 -->
+	<select id="findUserByAccount" parameterType="java.lang.String" resultMap="user_resultmap">
+		SELECT user_id, role_id, account, user_name, birthday, sex, email, phone, regist_date, head_portrait_name, is_valid, is_activated
+		FROM mnrmp_users_t
+		WHERE account = #{account}
+	</select>
+	
+	<!-- 查找account在用户表中是已否存在 -->
+	<select id="findAccountExists" parameterType="java.lang.String" resultType="java.lang.Boolean">
+		SELECT COUNT(account)
+		FROM mnrmp_users_t
+		WHERE account LIKE '%${account}%'
+	</select>
+	
+	<!-- 查找email在用户表中是否已存在 -->
+	<select id="findEmailExists" parameterType="java.lang.String" resultType="java.lang.Boolean">
+		SELECT COUNT(email)
+		FROM mnrmp_users_t
+		WHERE email LIKE '%${email}%'
+	</select>
+	
+	<!-- 用户注册，是一个事务，需要操作mnrmp_users_t,mnrmp_catalogs_t,mnrmp_user_session_t三张表 -->
+	<select id="insertUser" parameterType="southday.mnrmp.po.MnrmpUsersT" statementType="CALLABLE" resultType="java.lang.Boolean">
+		CALL proc_user_register(
+			#{roleId}, #{account}, #{userName}, #{birthday}, #{sex},
+			#{email}, #{phone}, #{password}, #{activateCode})
+	</select>
+	
+	<!-- 根据user_id判断用户是否已经激活 -->
+	<select id="findIsActivatedByUserId" parameterType="java.lang.Integer" resultType="java.lang.Boolean">
+		SELECT is_activated
+		FROM mnrmp_users_t
+		WHERE user_id = #{userId}
+	</select>
+	
+	<!-- 通过user_id来更新用户激活状态为已激活状态 -->
+	<update id="updateIsActivatedByUserId" parameterType="southday.mnrmp.po.MnrmpUsersT">
+		UPDATE mnrmp_users_t
+		SET is_activated = 1
+		WHERE user_id = #{userId}
+		AND activate_code = #{activateCode}
+	</update>
+	
+	<!-- 更新用户基本信息 -->
+	<update id="updateUserById" parameterType="southday.mnrmp.po.MnrmpUsersT">
+		UPDATE mnrmp_users_t
+		SET user_name = #{userName},
+		    birthday = #{birthday},
+		    sex = #{sex},
+		    phone = #{phone}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<!-- 更新用户密码 -->
+	<update id="updateUserPasswordById" parameterType="southday.mnrmp.po.MnrmpUsersT">
+		UPDATE mnrmp_users_t
+		SET password = #{password}
+		WHERE user_id = #{userId}
+	</update>
+	
+</mapper>

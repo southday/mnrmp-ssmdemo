@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="southday.mnrmp.mapper.MnrmpUserSessionTMapper" >
+	<resultMap type="southday.mnrmp.po.MnrmpUserSessionT" id="user_session_resultmap">
+		<id column="allot_id" property="allotId" />
+		<result column="account" property="account" />
+		<result column="session_id" property="sessionId" />
+		<result column="user_type_code" property="userTypeCode" />
+	</resultMap>
+	
+	<!-- 根据account、session、user_type_code 查询用户session信息 -->
+	<select id="findUserSessionExists" parameterType="southday.mnrmp.po.MnrmpUserSessionT" resultType="java.lang.Boolean">
+		SELECT COUNT(*) 
+		FROM mnrmp_user_session_t
+		WHERE account = #{account}
+		AND session_id = #{sessionId}
+		AND user_type_code = #{userTypeCode}
+	</select>
+	
+	<!-- 更新用户sessionId -->
+	<update id="updateUserSessionId" parameterType="southday.mnrmp.po.MnrmpUserSessionT">
+		UPDATE mnrmp_user_session_t
+		SET session_id = #{sessionId}
+		WHERE account = #{account}
+		AND user_type_code = #{userTypeCode}
+	</update>
+	
+</mapper>

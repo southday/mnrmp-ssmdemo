@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>删除上传的视频</title>
+</head>
+<body>
+	<form action="/MNRMP/user/deleteRefusedVideo.do" method="post">
+		视频id:<input type="text" name="videoId" value="" /><br />
+		审核状态:
+		<select name="statusCode">
+			<option value="REVIEWING">正在审核</option>
+			<option value="ACCEPTED">发布成功</option>
+			<option value="REFUSED">发布失败</option>
+		</select><br />
+		<input type="submit" value="删除视频" />
+	</form>
+</body>
+</html>

@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="/MNRMP/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="/MNRMP/css/bootstrap.min.css"> 
+<script type="text/javascript" src="/MNRMP/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/mnrmp.js"></script>
+<script type="text/javascript" src="/MNRMP/js/login.js"></script>
+<script type="text/javascript" src="/MNRMP/js/data-request.js"></script>
+	<title>视频上传</title>
+	<script type="text/javascript">
+  //上传前检查登录
+		function check(){
+	   	    checkLoginStatus();
+			if (getCookie("loginStatus")) {
+             document.getElementById("warning").className="hidden";
+             document.getElementById("upload").className="container-fluid";
+             getVideoCatalog();
+             getVideoCategory();
+			}else{
+         $('#myModal').modal('show');
+				document.getElementById("warning").className="container-fluid";
+				document.getElementById("upload").className="hidden";
+			}
+		}
+        //获取视频目录
+        var url="/MNRMP/user/myAllCatalogs.do";
+		   function getVideoCatalog(){
+        postRequest(url,null,f);
+		   }
+
+       //加载视频目录
+        var f=function addOption(data){
+    	   data=eval("("+data+")");
+        	 var videoCatalog=document.getElementById("catalogId");
+           var videoCatalogList="";
+                    for (var i = 0; i < data.length; i++) {
+                           videoCatalogList+='<label class="radio-inline">'
+                                +'<input type="radio" name="catalogId"  value="'+data[i].catalogId+'" >'+data[i].catalogName
+                                +'</label>';
+                              }
+            videoCatalog.innerHTML=videoCatalogList;
+        }
+
+
+
+       //检查上传的视频是否符合
+        function checkVideo(video){
+         var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+         videoExt=video.value.substr(video.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
+        
+ 
+       var fileSize = 0;          
+       if (isIE && !video.files) {      
+      var filePath = video.value;      
+      var fileSystem = new ActiveXObject("Scripting.FileSystemObject");         
+      var file = fileSystem.GetFile (filePath);      
+      fileSize = file.Size;     
+     } else {     
+     fileSize = video.files[0].size;      
+     }    
+     var size = fileSize / 1024;     
+      if(size<100){   
+         document.getElementById("tip1").className="help-block";
+         document.getElementById("submit").disabled=true;
+      }else{
+         document.getElementById("submit").disabled=false;
+         document.getElementById("tip1").className="hidden";
+      }
+         if (videoExt!=".flv"&&videoExt!=".mp4") {
+            document.getElementById("tip2").className="help-block";     
+            document.getElementById("submit").disabled=true;
+         }else{
+         	document.getElementById("submit").disabled=false;
+            document.getElementById("tip2").className="hidden";     
+         }
+        } 
+//弹出模态框输入密码
+   function selectOnchange(optionValue){
+    if (optionValue=="ENCRYPTION") {
+   var modalbody=document.getElementById("modal-body");
+       modalbody.innerHTML='<div class="form-group">'
+                           +'<label  class="col-sm-4 control-label">输入密码</label>'
+                           +'<div class="col-sm-6">'
+                           +'<input id="seePassword" class="form-control" required="required" type="password" name="seePassword">'
+                           +'</div>'
+                           +'<button class="btn btn-success" onclick="inputPassword()">确定</button>'
+                           +'</div>';
+    $('#p').modal('show');
+    }
+   }
+//处理模态框输入结果
+   function inputPassword(){
+    $('#p').modal('hide');
+   }
+//限制checkbox选择的个数
+$(document).ready(function() {
+  $('input[type=checkbox]').click(function() {
+   $("input[name='category']").attr('disabled', true);
+   if ($("input[name='category']:checked").length >= 3) {
+    $("input[name='category']:checked").attr('disabled', false);
+   } else {
+    $("input[name='category']").attr('disabled', false);
+   }
+  });
+ })
+	</script>
+</head>
+<body onload="check()">
+
+<div class="container-fluid" style="margin-top:20px;">
+
+	<div class="row-fluid" >
+	<div class="col-md-5">
+	<a href="/MNRMP/index.html"><img src="/MNRMP/images/mnrmp.png" alt="网站图标" height="50" width="100"></a>
+		</div>
+		<div class="col-md-4">
+		<form name="serachform" class="bs-example bs-example-form" role="form" method="get" action="/MNRMP/htmlfiles/user/searchResult.html"> 
+        <div class="input-group" > 
+            <input id="searchKey" name="searchKey" type="text" required="required" class="form-control"> 
+            <span class="input-group-addon" onclick="submitform()">搜索</span>
+        </div> 
+    </form> 
+		</div>
+		<div class="col-md-3" >
+		<ol id="navbar" class="breadcrumb">
+	    <li><a data-toggle="modal" data-target="#myModal">登录</a></li>
+	    <li><a href="/MNRMP/htmlfiles/user/register.html" >注册</a></li>
+	    <li><a  href="/MNRMP/htmlfiles/user/upload.html">上传视频</a></li>
+        </ol>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					用户登录
+				</h4>
+			</div>
+			
+			<div class="modal-body">
+	<form id="loginform" class="form-horizontal" role="form" action="/MNRMP/user/login.do"> 
+    <div class="form-group"> 
+        <label for="userName"  class="col-sm-2 control-label">用户名</label> 
+        <div class="col-sm-6"> 
+            <input type="text" required="required" class="form-control" name="userName" placeholder="用户账号/电子邮箱"> 
+        </div> 
+    </div> 
+    <div class="form-group"> 
+        <label for="password"  class="col-sm-2 control-label">密码</label> 
+        <div class="col-sm-6"> 
+            <input type="password" required="required" class="form-control" name="password" placeholder="密码">
+        </div> 
+    </div> 
+
+    <div class="form-group"> 
+        <label for="jcaptcha" class="col-sm-2 control-label">验证码</label> 
+        <div class="col-sm-3"> 
+            <input type="text" required="required" class="form-control" name="jcaptcha" placeholder="验证码">
+        </div> 
+         <img id="verifyCodeImg" class="col-sm-6" data-container="form[id='loginform']" data-toggle="popover" data-placement="top" data-trigger="hover"
+            onclick="changeVerifyCode()" data-content="点击更换验证码" src="/MNRMP/jcaptcha.jpg">
+    </div> 
+      <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rememberMe">10天内自动登录
+        </label>
+      </div>
+    </div>
+  </div>
+    <a href="#" style="float:left;margin-left:20px;font-size:20px;">忘记密码?</a>
+    <a href="/MNRMP/htmlfiles/user/register.html" style="float:left;margin-left:50px;font-size:20px;">注册</a>
+	<input type="submit" class="btn btn-success" style="margin-left:90px;">
+
+</form>
+
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+	</div>
+	</div>
+</div>
+</div>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-12">
+	<hr>
+</div>
+	</div>
+</div>
+ <!--未登录警告框-->
+<div id="warning" class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-12 alert alert-warning">
+    <!--
+	    <a href="#" class="close" data-dismiss="alert">
+		&times;
+	</a>
+  -->
+	<strong>您当前尚未登录！请点击右上角登录按钮进行登录！</strong>
+</div>
+	</div>
+</div>
+<div class="container-fluid" id="upload">
+	<div class="row-fluid">
+		<div class="col-md-3">
+		</div>
+     <!--上传视频表单-->
+		<div class="col-md-6">
+         <form id="uploadform" class="form-horizontal" role="form" action="/MNRMP/user/uploadVideo.do" enctype="multipart/form-data" method="post">
+          <div class="form-group"> 
+        <label for="videoTitle"  class="col-sm-2 control-label">视频标题</label> 
+        <div class="col-sm-6"> 
+            <input type="text" required="required"  class="form-control" name="videoTitle" placeholder="视频名称"> 
+        </div> 
+       </div> 
+       <div class="form-group">
+         <div class="col-sm-2"></div>
+         <div class="col-sm-6">
+         <input type="file" required="required"  id="file" name="multVideo" 
+         accept="video/mp4,video/flv" onchange="checkVideo(this)">
+          <p id="tip1" class="hidden" style="color:red;">*文件过小*</p>
+          <p id="tip2" class="hidden" style="color:red;">*文件格式错误*</p>
+          </div>
+    </div>
+       <div class="form-group"> 
+        <label for="catalogId"  class="col-sm-2 control-label">文件目录</label> 
+        <div id="catalogId" class="col-sm-6"> 
+        
+        </div> 
+       </div> 
+
+       <div class="form-group">
+        <label  class="col-sm-2 control-label">视频分类</label>
+        <div id="category" class="col-sm-6">
+        <label><input  type="checkbox" name="category" value="FILM">电影</label>
+        <label><input  type="checkbox" name="category" value="TV_PLAY">电视剧</label>
+        <label><input  type="checkbox" name="category" value="CARTOON">动漫</label>
+        <label><input  type="checkbox" name="category" value="SCIENCE_TECHNOLOGY">科技</label>
+        <label><input  type="checkbox" name="category" value="LIFE">生活</label>
+        <label><input  type="checkbox" name="category" value="ENTERTAINMENT">娱乐</label>
+        <label><input  type="checkbox" name="category" value="GAME">游戏</label>
+        <label><input  type="checkbox" name="category" value="ORIGINAL">原创</label>
+        <label><input  type="checkbox" name="category" value="DOCUMENTARY">纪实</label>
+        <label><input  type="checkbox" name="category" value="SPORTS">体育</label>
+        <label><input  type="checkbox" name="category" value="OTHER">其他</label>
+        </div>
+       	
+       </div>
+       <div class="form-group">
+         <label  class="col-sm-2 control-label">隐私设置</label>
+         <div class="col-sm-6">
+          <select name="privacyCode" class="form-control" onchange="selectOnchange(this.value)" >
+          <option value="PUBLIC">公开</option>
+          <option value="PRIVATE">个人的</option>
+          <option value="ENCRYPTION">设置密码</option>
+         </select>
+         </div>
+         </div>
+    <div class="modal fade" id="p" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div id="modal-body" class="modal-body">
+
+      
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="form-group">
+         <label for="intro"  class="col-sm-2 control-label">视频描述</label>
+    	 <textarea  class="col-sm-6" rows="4" required="required"  name="intro" form="uploadform" style="border:2px dashed gray" ></textarea>
+    </div>
+    <div class="form-group">
+    	<div class="col-sm-6"></div>
+    	<div class="col-sm-2">
+    		 <input id="submit" type="submit"  class="btn btn-success">
+    	</div>
+    </div>
+        
+         </form>
+        
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>

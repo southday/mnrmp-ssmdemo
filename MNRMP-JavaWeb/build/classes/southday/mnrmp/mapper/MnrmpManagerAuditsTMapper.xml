@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="southday.mnrmp.mapper.MnrmpManagerAuditsTMapper" >
+	<resultMap type="southday.mnrmp.po.MnrmpManagerAuditsT" id="manager_audits_resultmap">
+		<id column="audit_id" property="auditId" />
+		<result column="video_id" property="videoId" />
+		<result column="manager_id" property="managerId" />
+		<result column="status_code" property="statusCode" />
+		<result column="audit_date" property="auditDate" />
+		<result column="description" property="description" />
+	</resultMap>
+	
+	<resultMap type="southday.mnrmp.po.MnrmpManagerAuditsV" id="manager_auditsvo_resultmap" extends="manager_audits_resultmap">
+		<result column="video_title" property="videoTitle" />
+		<result column="video_name" property="videoName" />
+		<result column="miniature_name" property="miniatureName" />			
+		<result column="upload_date" property="uploadDate" />
+		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+	</resultMap>
+	
+	<!-- 根据manager_id和status_code选择相关的审核记录 -->
+	<select id="findAuditRecord" parameterType="southday.mnrmp.po.MnrmpQueryParameter" resultMap="manager_auditsvo_resultmap">
+		SELECT  audit_id, manager_id, status_code, audit_date, description, video_id,
+				video_title, video_name, miniature_name, upload_date, user_id, user_name
+		FROM mnrmp_manager_audits_v
+		<where>
+			manager_id = #{managerId}
+			<if test="statusCode!=null and statusCode!=''">
+				AND status_code = #{statusCode}
+			</if>
+			<include refid="southday.mnrmp.mapper.MnrmpVideosTMapper.query_video_where_foreach"></include>
+		</where>
+		LIMIT #{startRecordNo}, #{selectRecordNum}
+	</select>
+	
+	<!-- 获取满足查询条件的审核记录总数 -->
+	<select id="findAuditTotalRecordNum" parameterType="southday.mnrmp.po.MnrmpQueryParameter" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM (SELECT audit_id
+			FROM mnrmp_manager_audits_v
+			<where>
+				manager_id = #{managerId}
+				<if test="statusCode!=null and statusCode!=''">
+					AND status_code = #{statusCode}
+				</if>
+				<include refid="southday.mnrmp.mapper.MnrmpVideosTMapper.query_video_where_foreach"></include>
+			</where>) T
+	</select>
+	
+	<select id="updateAuditRecord" parameterType="southday.mnrmp.po.MnrmpManagerAuditsT" resultType="java.lang.Boolean">
+		CALL proc_audit_video(#{auditId}, #{videoId}, #{statusCode}, #{auditDate}, #{description})
+	</select>
+</mapper>

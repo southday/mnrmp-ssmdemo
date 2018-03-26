@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load-homepage-videos-test</title>
+</head>
+<body>
+	<form action="/MNRMP/common/loadHomePageVideos.do" method="get">
+		当前页面：
+		<input type="radio" name="curPageNo" value="1" />第1页 
+		<input type="radio" name="curPageNo" value="2" />第2页 
+		<input type="radio" name="curPageNo" value="3" />第3页 
+		<input type="radio" name="curPageNo" value="4" />第4页 
+		<input type="radio" name="curPageNo" value="5" />第5页<br />
+		搜索关键字：<input type="text" name="searchKeyword" value="" /><br />
+		视频类别：
+		<input type="radio" name="categoryCode" value="" />全部
+		<input type="radio" name="categoryCode" value="ENTERTAINMENT" />娱乐
+		<input type="radio" name="categoryCode" value="SCIENCE_TECHNOLOGY" />科技
+		<input type="radio" name="categoryCode" value="DOCUMENTARY" />纪实
+		<input type="radio" name="categoryCode" value="ORIGINAL" />原创
+		<input type="radio" name="categoryCode" value="GAME" />游戏
+		<input type="radio" name="categoryCode" value="TV_PLAY" />电视剧
+		<input type="radio" name="categoryCode" value="FILM" />电影
+		<input type="radio" name="categoryCode" value="CARTOON" />动画片
+		<input type="radio" name="categoryCode" value="SPORTS" />体育
+		<input type="radio" name="categoryCode" value="LIFE" />生活
+		<input type="radio" name="categoryCode" value="OTHER" />其他
+		<br /><input type="submit" value="搜索" />
+	</form>
+</body>
+</html>

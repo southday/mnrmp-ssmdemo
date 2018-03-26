@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="southday.mnrmp.mapper.MnrmpUserCommentsTMapper" >
+	<resultMap type="southday.mnrmp.po.MnrmpUserCommentsT" id="comment_resultmap">
+		<id column="comment_id" property="commentId" />
+		<result column="reply_id" property="replyId" />
+		<result column="user_id" property="userId" />
+		<result column="video_id" property="videoId" />
+		<result column="detail" property="detail" />
+		<result column="comment_date" property="commentDate" />
+		<result column="support_num" property="supportNum" />
+		<result column="oppose_num" property="opposeNum" />
+	</resultMap>
+	
+	<resultMap type="southday.mnrmp.po.MnrmpCommentEx" extends="comment_resultmap" id="commentex_resultmap">
+		<result column="user_name" property="userName" />
+	</resultMap>
+	
+	<!-- 用户添加评论 -->
+	<select id="insertComment" parameterType="southday.mnrmp.po.MnrmpUserCommentsT" resultMap="commentex_resultmap">
+		CALL proc_user_comment(#{userId}, #{videoId}, #{replyId}, #{detail})
+	</select>
+	
+	<!-- 用户删除评论，只能删除自己的评论，级联删除该评论下的所有子评论 -->
+	<!-- 返回值为是否回滚 true回滚(即删除不成功) -->
+	<select id="deleteCommentWithChilds" parameterType="southday.mnrmp.po.MnrmpUserCommentsT" resultType="java.lang.Boolean">
+		proc_delete_comment(#{userId}, #{commentId})
+	</select>
+	
+	<!-- 查询评论 -->
+	<select id="findCommentWithoutChilds" parameterType="southday.mnrmp.po.MnrmpQueryParameter" resultMap="commentex_resultmap">
+	    SELECT comment_id, reply_id, user_id, user_name, video_id, detail, comment_date, support_num, oppose_num
+	    FROM mnrmp_user_comments_t NATURAL JOIN mnrmp_users_t
+	    <where>
+	        video_id = #{videoId}
+	        <if test="replyId==null">
+	            AND reply_id IS NULL
+	        </if>
+	        <if test="replyId!=null">
+	            AND reply_id = #{replyId}
+	        </if>
+	    </where>
+	    LIMIT #{startRecordNo}, #{selectRecordNum}
+	</select>
+	
+	<!-- 判断某个评论是否有回复 -->
+	<select id="findChildCommentIsExists" parameterType="java.lang.Integer" resultType="java.lang.Boolean">
+	    SELECT COUNT(*)
+	    FROM mnrmp_user_comments_t
+	    WHERE reply_id = #{commentId}
+	</select>
+	
+	<!-- 用户对某个视频点击[支持]，返回true代表操作成功-->
+	<select id="updateCommentSupportNum" parameterType="java.lang.Integer" resultType="java.lang.Boolean">
+		CALL proc_support_comment(#{commentId})
+	</select>
+	
+	<!-- 用户对某个视频点击[反对} 返回true代表操作成功 -->
+	<select id="updateCommentOpposeNum" parameterType="java.lang.Integer" resultType="java.lang.Boolean">
+		CALL proc_oppose_comment(#{commentId})
+	</select>
+</mapper>

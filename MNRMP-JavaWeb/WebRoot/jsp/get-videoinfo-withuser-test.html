@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>videoInfo with user</title>
+<script type="text/javascript">
+function changeForm(type) {
+	var myform = document.getElementById("myform");
+	switch (type) {
+	case 1:
+		myform.action = "/MNRMP/common/getVideo.do"
+		break;
+	case 2:
+		myform.action = "/MNRMP/user/getVideo.do"
+		break;
+	case 3:
+		myform.action = "/MNRMP/resManager/getVideo.do"
+		break;
+	}
+}
+</script>
+</head>
+<body>
+	<button onclick="changeForm(1)">common</button>
+	<button onclick="changeForm(2)">user</button>
+	<button onclick="changeForm(3)">resManager</button>
+	
+	<form id="myform" action="/MNRMP/common/getVideo.do" method="get">
+		视频id:<input type="text" name="videoId" value="" /><br />
+		<input type="submit" value="获取视频信息" />
+	</form>
+</body>
+</html>

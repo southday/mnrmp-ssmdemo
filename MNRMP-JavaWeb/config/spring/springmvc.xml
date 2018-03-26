@@ -1,0 +1,138 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <!-- =============================== 映射器 + 适配器 ========================================== -->   
+    <!-- ((((((((((((((((((( Handler ))))))))))))))))))) -->
+    <!-- 对于注解的Handler，可以单个进行配置 
+    但在实际开发中，建议使用组件扫描
+    --> 
+    <!-- <bean class="southday.mnrmp.controller.ItemController3"/> -->
+    <!-- 组件扫描
+    可以扫描controller、service ...
+    这里我想让它扫描 Controller，所以我要指定Controller所在的包
+     -->
+    <context:component-scan base-package="southday.mnrmp.controller"></context:component-scan>
+    <!-- ((((((((((((((((((( Handler ))))))))))))))))))) -->
+    
+    <!-- 使用mvc:annotation-driven可以代替注解映射器和注解适配器的配置 
+    该注解驱动还默认加载了 很多的参数绑定方法，比如json转换解析器就默认加载了，
+    如果使用mvc:annotation-driven不用配置RequestMappingHandlerAdapter和RequestMappingHandlerMapping
+    -->
+    <!-- 实际开发中，就是使用mvc:annotation-driven 方式 -->
+    <mvc:annotation-driven conversion-service="conversionService"
+        validator="validator"></mvc:annotation-driven>
+    <!-- =============================== 映射器 + 适配器 ========================================== -->   
+    
+    <!-- ============================ 视图解析器 ========================================== -->  
+    <!-- 视图解析器 
+    解析jsp视图，默认使用jstl完成，你的classpath下面得有jstl的包
+    -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/jsp/"></property>
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp"></property>
+        <!-- 配置完 前缀和后缀后， Handler中的映射就无需再写 这些配置过的路径及后缀名 -->
+    </bean>
+    <!-- ============================ 视图解析器 ========================================== -->  
+    
+    <!-- ============================ 自定义参数绑定 ======================================= -->
+    <!-- 自定义参数绑定 -->    
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!-- 转换器 -->
+        <property name="converters">
+            <list>
+                <!-- 日期类型的转换 -->
+                <!-- <bean class="southday.lrms.controller.converter.CustomDateConverter"/> -->
+            </list>
+        </property>
+    </bean>
+    <!-- ============================ 自定义参数绑定 ======================================= -->
+    
+    <!-- ================================ 校验器 ======================================== -->
+    <!-- 校验器 -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!-- 校验器-->
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+        <!-- 指定校验使用的资源文件，如果不指定则默认使用classpath下的ValidationMessages.properties -->
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
+    <!-- 校验错误信息配置文件 -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- 资源文件名-->
+        <property name="basenames">   
+         <list>    
+            <value>classpath:CustomValidationMessages</value> 
+         </list>   
+        </property>
+        <!-- 资源文件编码格式 -->
+        <property name="fileEncodings" value="utf-8" />
+        <!-- 对资源文件内容缓存时间，单位秒 -->
+        <property name="cacheSeconds" value="120" />
+    </bean>
+    <!-- ================================ 校验器 ======================================== -->
+    
+    <!-- ================================ 全局异常处理器 ======================================== -->
+    <!-- 全局异常处理器
+    只要实现了HandlerExceptionResolver接口就是全局异常处理器
+    有多个类实现HandlerExceptionResolver接口，只有一个起作用
+     -->
+    <!-- <bean class="southday.ssm.exception.CustomExceptionResolver"></bean> -->
+    <!-- ================================ 全局异常处理器 ======================================== -->
+    
+    <!-- ================================ multipart类型解析器 ================================== -->
+    <!-- 文件上传 -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为20MB -->
+        <property name="maxUploadSize">
+            <value>20971520</value> <!-- 20*1024*1024 Bytes -->
+        </property>
+    </bean> 
+    <!-- ================================ multipart类型解析器 ================================== -->
+
+    <!-- ================================== 拦截器 =========================================== -->
+    <!--拦截器 -->
+	<mvc:interceptors>
+        <!-- 多个拦截器,顺序执行 -->
+        <mvc:interceptor>
+            <!-- 
+            1) /** 表示拦截所有的url，包括子url路径
+            2) /*  则只拦截最根的那层url
+            -->
+            
+            <!-- 登录认证拦截器 -->
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/common/**"/> <!-- 不拦截的url -->
+            <mvc:exclude-mapping path="/user/login.do" /> <!-- 登录和退出不拦截 -->
+            <mvc:exclude-mapping path="/user/logout.do" />
+            <mvc:exclude-mapping path="/resManager/login.do" />
+            <mvc:exclude-mapping path="/resManager/logout.do" />
+            <mvc:exclude-mapping path="/sysAdmin/login.do" />
+            <mvc:exclude-mapping path="/sysAdmin/logout.do" />
+            <bean class="southday.mnrmp.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+            
+        <!-- 普通员工上传资料，下载资料 | 资料管理员审核资料，管理资料类型 操作的拦截器
+        <mvc:interceptor>
+            <mvc:mapping path="/user/uploadVideo.do"/>
+            <mvc:mapping path="/user/downloadVideo.do"/>
+            <mvc:mapping path="/user/comment.do"/>
+            <bean class="southday.mnrmp.interceptor.AuthorityInterceptor"></bean>
+        </mvc:interceptor> -->
+        
+    </mvc:interceptors>
+    <!-- ================================== 拦截器 =========================================== -->
+</beans>

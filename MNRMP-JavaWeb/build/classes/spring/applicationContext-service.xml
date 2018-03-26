@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- 
+	<bean id="service_var_name" class="southday.mnrmp.service.impl.xxxServiceImpl" />	
+	 -->
+	<bean id="userService" class="southday.mnrmp.service.impl.MnrmpUsersTServiceImpl" />
+	<bean id="userSessionService" class="southday.mnrmp.service.impl.MnrmpUserSessionTServiceImpl" />
+	<bean id="resManagerService" class="southday.mnrmp.service.impl.MnrmpResManagersTServiceImpl" />
+	<bean id="sysAdminService" class="southday.mnrmp.service.impl.MnrmpSysAdminsTServiceImpl" />
+	<bean id="commonService" class="southday.mnrmp.service.impl.MnrmpCommonServiceImpl" />
+
+    <!-- <bean id="emplService" class="southday.lrms.service.impl.EmployeeServiceImpl" />
+    <bean id="matAdminService" class="southday.lrms.service.impl.MaterialAdminServiceImpl" />
+    <bean id="sysAdminService" class="southday.lrms.service.impl.SystemAdminServiceImpl" />
+    <bean id="matService" class="southday.lrms.service.impl.MaterialServiceImpl" />
+    <bean id="storageMatService" class="southday.lrms.service.impl.StorageMaterialServiceImpl" />
+    <bean id="nopassedMatService" class="southday.lrms.service.impl.NopassedMaterialServiceImpl" />
+    <bean id="reviewRecordService" class="southday.lrms.service.impl.ReviewRecordServiceImpl" /> -->
+</beans>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>支持或反对评论</title>
+<script type="text/javascript">
+function changeForm(type) {
+	var myform = document.getElementById("myform");
+	var myin = document.getElementById("myin");
+	if (type == 1) {
+		myform.action = "/MNRMP/user/supportComment.do";
+		myin.value = "支持";
+	} else {
+		myform.action = "/MNRMP/user/opposeComment.do";
+		myin.value = "反对";
+	} 
+}
+</script>
+</head>
+<body>
+	<button onclick="changeForm(1)">支持</button>
+	<button onclick="changeForm(2)">反对</button>
+	<form id="myform" action="/MNRMP/user/supportComment.do" method="post">
+		评论id:<input type="text" name="commentId" value="" /><br />
+		<input id="myin" type="submit" value="支持" />	
+	</form>
+</body>
+</html>

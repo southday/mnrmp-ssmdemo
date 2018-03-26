@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的目录下的视频文件</title>
+</head>
+<body>
+	<form action="/MNRMP/user/myVideosInCatalog.do" method="get">
+		目录id:<input type="text" name="catalogId" value="" /><br />
+		当前页面：
+		<input type="radio" name="curPageNo" value="1" />第1页 
+		<input type="radio" name="curPageNo" value="2" />第2页 
+		<input type="radio" name="curPageNo" value="3" />第3页 
+		<input type="radio" name="curPageNo" value="4" />第4页 
+		<input type="radio" name="curPageNo" value="5" />第5页<br />
+		搜索关键字:<input type="text" name="searchKeyword" value="" /><br />
+		<input type="submit" value="获取目录下的视频信息" />
+	</form>
+</body>
+</html>

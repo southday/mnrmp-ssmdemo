@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 5.7.9, for linux-glibc2.5 (x86_64)
+--
+-- Host: localhost    Database: MNRMP
+-- ------------------------------------------------------
+-- Server version	5.7.11
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `mnrmp_manager_audits_t`
+--
+
+DROP TABLE IF EXISTS `mnrmp_manager_audits_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mnrmp_manager_audits_t` (
+  `audit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `video_id` int(11) NOT NULL,
+  `manager_id` int(11) NOT NULL,
+  `status_code` varchar(25) NOT NULL DEFAULT 'ACCEPTED',
+  `audit_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`audit_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mnrmp_manager_audits_t`
+--
+
+LOCK TABLES `mnrmp_manager_audits_t` WRITE;
+/*!40000 ALTER TABLE `mnrmp_manager_audits_t` DISABLE KEYS */;
+INSERT INTO `mnrmp_manager_audits_t` VALUES (1,1,1,'ACCEPTED','2016-09-18 00:00:00','视频不错！'),(2,2,1,'ACCEPTED','2016-09-18 00:00:00','还阔以！'),(3,3,2,'ACCEPTED','2016-09-22 00:00:00','very very good'),(4,4,3,'ACCEPTED','2016-09-18 00:00:00','good!'),(5,5,2,'ACCEPTED','2016-09-18 00:00:00','yoxi!'),(6,6,1,'REFUSED','2016-09-18 00:00:00','涉嫌抄袭！'),(7,7,2,'ACCEPTED','2016-09-18 00:00:00','very good!'),(8,8,3,'ACCEPTED','2016-09-18 00:00:00','哈哈啊哈哈!'),(9,9,2,'ACCEPTED','2016-09-18 00:00:00','很6！'),(10,10,1,'REFUSED','2016-09-18 00:00:00','违背党！'),(11,11,2,'ACCEPTED','2016-09-18 00:00:00','可以！'),(12,12,3,'REVIEWING',NULL,NULL),(13,13,1,'REFUSED','2016-09-22 10:43:40','老子就是要拒绝你！'),(23,19,3,'ACCEPTED','2016-09-22 10:43:40',NULL),(24,20,1,'REVIEWING',NULL,NULL),(25,21,3,'ACCEPTED','2016-09-22 10:43:40',NULL),(26,20,3,'REVIEWING',NULL,NULL),(30,22,1,'REVIEWING',NULL,NULL),(31,23,1,'ACCEPTED','2016-09-22 10:43:40',NULL),(32,24,1,'ACCEPTED','2016-09-22 10:43:40',NULL),(33,25,2,'ACCEPTED','2016-09-29 09:45:29',NULL),(34,26,2,'ACCEPTED','2016-09-29 09:58:55',NULL);
+/*!40000 ALTER TABLE `mnrmp_manager_audits_t` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-09-29 10:45:18

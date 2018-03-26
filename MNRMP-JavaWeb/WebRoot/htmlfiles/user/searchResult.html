@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="/MNRMP/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="/MNRMP/css/bootstrap.min.css"> 
+<script type="text/javascript" src="/MNRMP/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/MNRMP/js/mnrmp.js"></script>
+<script type="text/javascript" src="/MNRMP/js/login.js"></script>
+<script type="text/javascript" src="/MNRMP/js/data-request.js"></script>
+<script type="text/javascript" src="/MNRMP/js/div-page.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title></title>
+</head>
+<body onload="search()">
+<div class="container-fluid" style="margin-top:20px;">
+
+	<div class="row-fluid" >
+	<div class="col-md-5">
+	<a href="/MNRMP/index.html"><img src="/MNRMP/images/mnrmp.png" alt="网站图标" height="50" width="100"></a>
+		</div>
+		<div class="col-md-4">
+		<form name="serachform" class="bs-example bs-example-form" role="form" action="/MNRMP/htmlfiles/user/searchResult.html"> 
+        <div class="input-group" > 
+            <input id="searchKey" name="searchKey" type="text" required="required" class="form-control"> 
+            <span class="input-group-addon" onclick="submitform()">搜索</span>
+        </div> 
+    </form> 
+		</div>
+		<div class="col-md-3" >
+		<ol id="navbar" class="breadcrumb">
+	    <li><a data-toggle="modal" data-target="#myModal">登录</a></li>
+	    <li><a href="/MNRMP/htmlfiles/user/register.html" >注册</a></li>
+	    <li><a  href="/MNRMP/htmlfiles/user/upload.html">上传视频</a></li>
+        </ol>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					用户登录
+				</h4>
+			</div>
+			<div class="modal-body">
+	<form id="loginform" class="form-horizontal" role="form" action="/MNRMP/user/login.do"> 
+    <div class="form-group"> 
+        <label for="userName"  class="col-sm-2 control-label">用户名</label> 
+        <div class="col-sm-6"> 
+            <input type="text" required="required" class="form-control" name="userName" placeholder="用户账号/电子邮箱"> 
+        </div> 
+    </div> 
+    <div class="form-group"> 
+        <label for="password"  class="col-sm-2 control-label">密码</label> 
+        <div class="col-sm-6"> 
+            <input type="password" required="required" class="form-control" name="password" placeholder="密码">
+        </div> 
+    </div> 
+
+    <div class="form-group"> 
+        <label for="jcaptcha" class="col-sm-2 control-label">验证码</label> 
+        <div class="col-sm-3"> 
+            <input type="text" required="required" class="form-control" name="jcaptcha" placeholder="验证码">
+        </div> 
+        <img id="verifyCodeImg" class="col-sm-6" data-container="form[id='loginform']" data-toggle="popover" data-placement="top" data-trigger="hover"
+            data-content="点击更换验证码" onclick="changeVerifyCode()" src="/MNRMP/jcaptcha.jpg">
+    </div> 
+      <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rememberMe">10天内自动登录
+        </label>
+      </div>
+    </div>
+  </div>
+    <a href="#" style="float:left;margin-left:20px;font-size:20px;">忘记密码?</a>
+    <a href="/MNRMP/htmlfiles/user/register.html" style="float:left;margin-left:50px;font-size:20px;">注册</a>
+	<input type="submit" class="btn btn-success" style="margin-left:90px;">
+
+</form>
+
+			</div>
+
+		
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+	</div>
+	</div>
+</div>
+</div>
+
+<hr>
+<!--顶部分类导航栏-->
+<div class="container-fluid" style="margin-top:50px;">
+<div class="row-fluid text-center">
+  <ol id="navList" class="breadcrumb" style="font-size:20px;">
+	    <li><a href="/MNRMP/index.html"> 首页</a></li>
+	    <li><a  href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=TV_PLAY">电视剧</a></li>
+        <li><a  href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=FILM">电影</a></li>
+        <li><a  href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=CARTOON">动漫</a></li>
+        <li><a  href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=SCIENCE_TECHNOLOGY">科技</a></li>
+        <li><a  href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=LIFE">生活</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=ENTERTAINMENT">娱乐</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=GAME">游戏</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=ORIGINAL">原创</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=DOCUMENTARY">纪实</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=SPORTS">体育</a></li>
+        <li><a href="/MNRMP/htmlfiles/user/searchResult.html?categoryCode=OTHER">其他</a></li>
+ </ol>
+</div>
+</div>
+
+<div  class="container-fluid" >
+	<div id="searchResult" class="row-fluid">
+		
+	</div>
+</div>
+<div class="container-fluid">
+<div class="row-fluid" id="pageNum" style="position:fixed; bottom:0; left:50%">
+  
+</div>
+</div>
+</body>
+</html>

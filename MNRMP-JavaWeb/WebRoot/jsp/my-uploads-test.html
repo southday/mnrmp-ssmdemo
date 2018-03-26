@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我的上传</title>
+</head>
+<body>
+	<form action="/MNRMP/user/myUploads.do" method="get">
+		当前页面：
+		<input type="radio" name="curPageNo" value="1" />第1页 
+		<input type="radio" name="curPageNo" value="2" />第2页 
+		<input type="radio" name="curPageNo" value="3" />第3页 
+		<input type="radio" name="curPageNo" value="4" />第4页 
+		<input type="radio" name="curPageNo" value="5" />第5页<br />
+		搜索关键字:<input type="text" name="searchKeyword" value="" /><br />
+		审核状态:
+		<select name="statusCode">
+			<option value="REVIEWING">正在审核</option>
+			<option value="ACCEPTED">上传成功</option>
+			<option value="REFUSED">上传失败</option>
+		</select>
+		<br /><input type="submit" value="提交">
+	</form>
+</body>
+</html>
