@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="southday.mnrmp.mapper.MnrmpDicDataMapper" >
-	<resultMap type="southday.mnrmp.po.MnrmpDicData" id="dicdata_resultmap">
-		<!-- LookupType -->
-		<id column="lookup_type_id" property="lookupTypeId" />
-		<result column="lookup_type_code" property="lookupTypeCode" />
-		<result column="lookup_type_meaning" property="meaning" />
-		<!-- LookupValueList -->
-		<collection property="lookupValueList" ofType="southday.mnrmp.po.MnrmpLookupValuesT">
-			<id column="lookup_value_id" property="lookupValueId" />
-			<result column="lookup_type_id" property="lookupTypeId" />
-			<result column="lookup_value_code" property="lookupValueCode" />
-			<result column="lookup_value_meaning" property="meaning" />
-		</collection>
-	</resultMap>
-	
-	<!-- 查询字典数据 -->
-	<select id="findDicData" parameterType="java.util.List" resultMap="dicdata_resultmap">
-		SELECT  lookup_type_id, lookup_type_code, lookup_type_meaning,
-				lookup_value_id, lookup_value_code, lookup_value_meaning
-		FROM mnrmp_lookup_values_v
-		<where>
-			<if test="list!=null">
-				<foreach collection="list" item="lookupTypeCode" open="AND lookup_type_code IN(" close=")" separator=",">
-					#{lookupTypeCode}
-				</foreach>
-			</if>
-		</where>
-	</select>
+    <resultMap type="southday.mnrmp.po.MnrmpDicData" id="dicdata_resultmap">
+        <!-- LookupType -->
+        <id column="lookup_type_id" property="lookupTypeId" />
+        <result column="lookup_type_code" property="lookupTypeCode" />
+        <result column="lookup_type_meaning" property="meaning" />
+        <!-- LookupValueList -->
+        <collection property="lookupValueList" ofType="southday.mnrmp.po.MnrmpLookupValuesT">
+            <id column="lookup_value_id" property="lookupValueId" />
+            <result column="lookup_type_id" property="lookupTypeId" />
+            <result column="lookup_value_code" property="lookupValueCode" />
+            <result column="lookup_value_meaning" property="meaning" />
+        </collection>
+    </resultMap>
+    
+    <!-- 查询字典数据 -->
+    <select id="findDicData" parameterType="java.util.List" resultMap="dicdata_resultmap">
+        SELECT  lookup_type_id, lookup_type_code, lookup_type_meaning,
+                lookup_value_id, lookup_value_code, lookup_value_meaning
+        FROM mnrmp_lookup_values_v
+        <where>
+            <if test="list!=null">
+                <foreach collection="list" item="lookupTypeCode" open="AND lookup_type_code IN(" close=")" separator=",">
+                    #{lookupTypeCode}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="southday.mnrmp.mapper.MnrmpVideoCategoryTMapper" >
-	<resultMap type="southday.mnrmp.po.MnrmpVideoCategoryT" id="category_resultmap">
-		<id column="classify_id" property="classifyId" />
-		<result column="video_id" property="videoId" />
-		<result column="category_code" property="catagoryCode" />
-	</resultMap>
-	
-	<!-- 插入一条视频分类记录 -->
-	<insert id="insertOneVideoCategoryRecord" parameterType="southday.mnrmp.po.MnrmpVideoCategoryT">
-		INSERT INTO mnrmp_video_category_t(video_id, category_code)
-		VALUES(#{videoId}, #{categoryCode})	
-	</insert>
+    <resultMap type="southday.mnrmp.po.MnrmpVideoCategoryT" id="category_resultmap">
+        <id column="classify_id" property="classifyId" />
+        <result column="video_id" property="videoId" />
+        <result column="category_code" property="catagoryCode" />
+    </resultMap>
+    
+    <!-- 插入一条视频分类记录 -->
+    <insert id="insertOneVideoCategoryRecord" parameterType="southday.mnrmp.po.MnrmpVideoCategoryT">
+        INSERT INTO mnrmp_video_category_t(video_id, category_code)
+        VALUES(#{videoId}, #{categoryCode})    
+    </insert>
 </mapper>

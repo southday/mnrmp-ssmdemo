@@ -28,20 +28,20 @@ public class MnrmpSysAdminsT {
     private Boolean hasLogined; // 非数据库字段
     
     public String getUserTypeCode() {
-		return userTypeCode;
-	}
+        return userTypeCode;
+    }
 
-	public void setUserTypeCode(String userTypeCode) {
-		this.userTypeCode = userTypeCode == null ? null : userTypeCode.trim();
-	}
+    public void setUserTypeCode(String userTypeCode) {
+        this.userTypeCode = userTypeCode == null ? null : userTypeCode.trim();
+    }
 
-	public Boolean getHasLogined() {
-		return hasLogined;
-	}
+    public Boolean getHasLogined() {
+        return hasLogined;
+    }
 
-	public void setHasLogined(Boolean hasLogined) {
-		this.hasLogined = hasLogined;
-	}
+    public void setHasLogined(Boolean hasLogined) {
+        this.hasLogined = hasLogined;
+    }
 
     public Integer getAdminId() {
         return adminId;

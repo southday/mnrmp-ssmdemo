@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="southday.mnrmp.mapper.MnrmpUserCollectsTMapper" >
-	<!-- 插入用户收藏记录 -->
-	<select id="insertCollectRecord" parameterType="southday.mnrmp.po.MnrmpQueryParameter" resultType="java.lang.Boolean">
-		<!-- 本来是想在用户点击收藏时，从后台获取用户视频目录，然后选择要收藏到的目录 -->
-		<!-- CALL proc_collect_video(#{userId}, #{videoId}, #{catalogId}) -->
-		
-		<!-- 但做前端的同学说他弄不出来，我只能把所有收藏的目录默认为"默认精选集"，重写了存储过程 -->
-		CALL proc_collect_video_default(#{userId}, #{videoId})
-	</select>
+    <!-- 插入用户收藏记录 -->
+    <select id="insertCollectRecord" parameterType="southday.mnrmp.po.MnrmpQueryParameter" resultType="java.lang.Boolean">
+        <!-- 本来是想在用户点击收藏时，从后台获取用户视频目录，然后选择要收藏到的目录 -->
+        <!-- CALL proc_collect_video(#{userId}, #{videoId}, #{catalogId}) -->
+        
+        <!-- 但做前端的同学说他弄不出来，我只能把所有收藏的目录默认为"默认精选集"，重写了存储过程 -->
+        CALL proc_collect_video_default(#{userId}, #{videoId})
+    </select>
 </mapper>

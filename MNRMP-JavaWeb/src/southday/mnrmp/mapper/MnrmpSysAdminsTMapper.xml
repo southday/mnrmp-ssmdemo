@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="southday.mnrmp.mapper.MnrmpSysAdminsTMapper" >
-	<resultMap type="southday.mnrmp.po.MnrmpSysAdminsT" id="sysadmin_resultmap">
-		<id column="admin_id" property="adminId" />
-		<result column="admin_name" property="adminName" />
-		<result column="account" property="account" />
-		<result column="birthday" property="birthday" />
-		<result column="sex" property="sex" />
-		<result column="email" property="email" />
-		<result column="phone" property="phone" />
-		<result column="password" property="password" />
-		<result column="head_portrait_name" property="headPortraitName" />
-	</resultMap>
-	
-	<!-- 根据id获取系统管理员详细信息 -->
-	<select id="findSysAdminById" parameterType="java.lang.Integer" resultMap="sysadmin_resultmap">
-		SELECT admin_id, account, birthday, sex, email, phone, head_portrait_name
-		FROM mnrmp_sys_admins_t
-		WHERE admin_id = #{adminId}
-	</select>
-	
-	<!-- 根据系统管理员账号account和密码password查找sysAdmin -->
-	<select id="findSysAdminByAccountPassword" parameterType="southday.mnrmp.po.MnrmpSysAdminsT" resultMap="sysadmin_resultmap">
-		SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
-		FROM mnrmp_sys_admins_t 
-		WHERE account = #{account}
-		AND password = #{password}
-	</select>
-	
-	<!-- 根据系统管理员email和密码password查找sysAdmin -->
-	<select id="findSysAdminByEmailPassword" parameterType="southday.mnrmp.po.MnrmpSysAdminsT" resultMap="sysadmin_resultmap">
-		SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
-		FROM mnrmp_sys_admins_t 
-		WHERE email = #{email}
-		AND password = #{password}
-	</select>
-	
-	<!-- 根据系统管理员account查找sysAdmin -->
-	<select id="findSysAdminByAccount" parameterType="java.lang.String" resultMap="sysadmin_resultmap">
-		SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
-		FROM mnrmp_sys_admins_t 
-		WHERE account = #{account}
-	</select>
+    <resultMap type="southday.mnrmp.po.MnrmpSysAdminsT" id="sysadmin_resultmap">
+        <id column="admin_id" property="adminId" />
+        <result column="admin_name" property="adminName" />
+        <result column="account" property="account" />
+        <result column="birthday" property="birthday" />
+        <result column="sex" property="sex" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="head_portrait_name" property="headPortraitName" />
+    </resultMap>
+    
+    <!-- 根据id获取系统管理员详细信息 -->
+    <select id="findSysAdminById" parameterType="java.lang.Integer" resultMap="sysadmin_resultmap">
+        SELECT admin_id, account, birthday, sex, email, phone, head_portrait_name
+        FROM mnrmp_sys_admins_t
+        WHERE admin_id = #{adminId}
+    </select>
+    
+    <!-- 根据系统管理员账号account和密码password查找sysAdmin -->
+    <select id="findSysAdminByAccountPassword" parameterType="southday.mnrmp.po.MnrmpSysAdminsT" resultMap="sysadmin_resultmap">
+        SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
+        FROM mnrmp_sys_admins_t 
+        WHERE account = #{account}
+        AND password = #{password}
+    </select>
+    
+    <!-- 根据系统管理员email和密码password查找sysAdmin -->
+    <select id="findSysAdminByEmailPassword" parameterType="southday.mnrmp.po.MnrmpSysAdminsT" resultMap="sysadmin_resultmap">
+        SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
+        FROM mnrmp_sys_admins_t 
+        WHERE email = #{email}
+        AND password = #{password}
+    </select>
+    
+    <!-- 根据系统管理员account查找sysAdmin -->
+    <select id="findSysAdminByAccount" parameterType="java.lang.String" resultMap="sysadmin_resultmap">
+        SELECT admin_id, admin_name, account, birthday, sex, email, phone, head_portrait_name
+        FROM mnrmp_sys_admins_t 
+        WHERE account = #{account}
+    </select>
 </mapper>

@@ -8,13 +8,13 @@ import java.util.List;
  * @date Sep 18, 2016
  */
 public class MnrmpDicData extends MnrmpLookupTypesT {
-	private List<MnrmpLookupValuesT> lookupValueList;
+    private List<MnrmpLookupValuesT> lookupValueList;
 
-	public List<MnrmpLookupValuesT> getLookupValueList() {
-		return lookupValueList;
-	}
+    public List<MnrmpLookupValuesT> getLookupValueList() {
+        return lookupValueList;
+    }
 
-	public void setLookupValueList(List<MnrmpLookupValuesT> lookupValueList) {
-		this.lookupValueList = lookupValueList;
-	}
+    public void setLookupValueList(List<MnrmpLookupValuesT> lookupValueList) {
+        this.lookupValueList = lookupValueList;
+    }
 }

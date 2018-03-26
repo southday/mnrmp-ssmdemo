@@ -38,38 +38,38 @@ public class MnrmpUsersT {
     private Boolean hasLogined; // 非数据库字段
 
     public String getActivateCode() {
-		return activateCode;
-	}
+        return activateCode;
+    }
 
-	public void setActivateCode(String activateCode) {
-		this.activateCode = activateCode == null ? null : activateCode.trim();
-	}
+    public void setActivateCode(String activateCode) {
+        this.activateCode = activateCode == null ? null : activateCode.trim();
+    }
 
-	public String getUserTypeCode() {
-		return userTypeCode;
-	}
+    public String getUserTypeCode() {
+        return userTypeCode;
+    }
 
-	public void setUserTypeCode(String userTypeCode) {
-		this.userTypeCode = userTypeCode == null ? null : userTypeCode.trim();
-	}
+    public void setUserTypeCode(String userTypeCode) {
+        this.userTypeCode = userTypeCode == null ? null : userTypeCode.trim();
+    }
 
-	public Boolean getHasLogined() {
-		return hasLogined;
-	}
+    public Boolean getHasLogined() {
+        return hasLogined;
+    }
 
-	public void setHasLogined(Boolean hasLogined) {
-		this.hasLogined = hasLogined;
-	}
+    public void setHasLogined(Boolean hasLogined) {
+        this.hasLogined = hasLogined;
+    }
 
-	public Boolean getIsActivated() {
-		return isActivated;
-	}
+    public Boolean getIsActivated() {
+        return isActivated;
+    }
 
-	public void setIsActivated(Boolean isActivated) {
-		this.isActivated = isActivated;
-	}
+    public void setIsActivated(Boolean isActivated) {
+        this.isActivated = isActivated;
+    }
 
-	public Integer getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 

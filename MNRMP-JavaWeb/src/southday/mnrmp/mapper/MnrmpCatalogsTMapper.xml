@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="southday.mnrmp.mapper.MnrmpCatalogsTMapper" >
-	<resultMap type="southday.mnrmp.po.MnrmpCatalogsT" id="catalog_resultmap">
-		<id column="catalog_id" property="catalogId" />
-		<result column="catalog_name" property="catalogName" />
-		<result column="parent_catalog_id" property="parentCatalogId" />
-		<result column="user_id" property="userId" />
-  	</resultMap>
-  	
-  	<!-- 查询指定user_id的目录 -->
-  	<select id="findCatalogsByUserId" parameterType="java.lang.Integer" resultMap="catalog_resultmap">
-  		SELECT catalog_id, catalog_name, parent_catalog_id
-  		FROM mnrmp_catalogs_t
-  		WHERE user_id = #{userId}
-  	</select>
-  	
-  	<!-- 通过catalogId查询目录信息 -->
-  	<select id="findCatalogByCatalogId" parameterType="java.lang.Integer" resultMap="catalog_resultmap">
-  		SELECT catalog_id, catalog_name, parent_catalog_id, user_id
-  		FROM mnrmp_catalogs_t
-  		WHERE catalog_id = #{catalogId}
-  	</select>
-  	
-  	<!-- 查询指定用户的某个目录及该目录下的所有子目录 -->
-  	<select id="findCatalogWithChilds" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="catalog_resultmap">
-  		SELECT catalog_id, catalog_name, parent_catalog_id, user_id
+    <resultMap type="southday.mnrmp.po.MnrmpCatalogsT" id="catalog_resultmap">
+        <id column="catalog_id" property="catalogId" />
+        <result column="catalog_name" property="catalogName" />
+        <result column="parent_catalog_id" property="parentCatalogId" />
+        <result column="user_id" property="userId" />
+      </resultMap>
+      
+      <!-- 查询指定user_id的目录 -->
+      <select id="findCatalogsByUserId" parameterType="java.lang.Integer" resultMap="catalog_resultmap">
+          SELECT catalog_id, catalog_name, parent_catalog_id
+          FROM mnrmp_catalogs_t
+          WHERE user_id = #{userId}
+      </select>
+      
+      <!-- 通过catalogId查询目录信息 -->
+      <select id="findCatalogByCatalogId" parameterType="java.lang.Integer" resultMap="catalog_resultmap">
+          SELECT catalog_id, catalog_name, parent_catalog_id, user_id
+          FROM mnrmp_catalogs_t
+          WHERE catalog_id = #{catalogId}
+      </select>
+      
+      <!-- 查询指定用户的某个目录及该目录下的所有子目录 -->
+      <select id="findCatalogWithChilds" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="catalog_resultmap">
+          SELECT catalog_id, catalog_name, parent_catalog_id, user_id
         FROM mnrmp_catalogs_t
         WHERE user_id = #{userId}
         AND FIND_IN_SET(catalog_id, func_get_child_catalogids(#{catalogId}))
-  	</select>
-  	
-  	<!-- 新增用户视频目录 -->
-  	<select id="insertCatalog"  parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="catalog_resultmap">
-  		CALL proc_create_catalog(#{userId}, #{parentCatalogId}, #{catalogName})
-  	</select>
-  	
-  	<!-- 在删除视频目录前，获取该用户自己上传的[已接受]或[已拒绝]的在该目录下的视频 -->
-  	<select id="findMyVideosByCatalogId" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="southday.mnrmp.mapper.MnrmpVideosTMapper.video_resultmap">
+      </select>
+      
+      <!-- 新增用户视频目录 -->
+      <select id="insertCatalog"  parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="catalog_resultmap">
+          CALL proc_create_catalog(#{userId}, #{parentCatalogId}, #{catalogName})
+      </select>
+      
+      <!-- 在删除视频目录前，获取该用户自己上传的[已接受]或[已拒绝]的在该目录下的视频 -->
+      <select id="findMyVideosByCatalogId" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultMap="southday.mnrmp.mapper.MnrmpVideosTMapper.video_resultmap">
     SELECT video_id, video_name, miniature_name
     FROM mnrmp_videos_t
     WHERE user_id = #{userId}
@@ -45,21 +45,21 @@
                        FROM mnrmp_catalogs_t
                        WHERE user_id = #{userId}
                        AND FIND_IN_SET(catalog_id, func_get_child_catalogids(#{catalogId})))
-	</select>
-  	
-  	<!-- 删除用户视频目录 -->
-  	<select id="deleteCatalog" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
-  		CALL proc_delete_catalog(#{userId}, #{catalogId})
-  	</select>
-  	
-  	<!-- 目录重命名 -->
-  	<select id="updateCatalogName" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
-  		CALL proc_rename_catalog(#{userId}, #{catalogId}, #{catalogName})
-  	</select>
-  	
-  	<!-- 目录移动 -->
-  	<select id="updateCatalogSite" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
-  		CALL proc_move_catalog(#{userId}, #{catalogId}, #{parentCatalogId})
-  	</select>
-  	
+    </select>
+      
+      <!-- 删除用户视频目录 -->
+      <select id="deleteCatalog" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
+          CALL proc_delete_catalog(#{userId}, #{catalogId})
+      </select>
+      
+      <!-- 目录重命名 -->
+      <select id="updateCatalogName" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
+          CALL proc_rename_catalog(#{userId}, #{catalogId}, #{catalogName})
+      </select>
+      
+      <!-- 目录移动 -->
+      <select id="updateCatalogSite" parameterType="southday.mnrmp.po.MnrmpCatalogsT" resultType="java.lang.Boolean">
+          CALL proc_move_catalog(#{userId}, #{catalogId}, #{parentCatalogId})
+      </select>
+      
 </mapper>

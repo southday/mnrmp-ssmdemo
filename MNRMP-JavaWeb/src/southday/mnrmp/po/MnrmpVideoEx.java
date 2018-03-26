@@ -6,34 +6,34 @@ package southday.mnrmp.po;
  * @date Sep 21, 2016
  */
 public class MnrmpVideoEx extends MnrmpVideosT {
-	private Integer managerId;
-	
-	private String userName;
-	
-	private String description;
-	
-	public String getDescription() {
-		return description;
-	}
+    private Integer managerId;
+    
+    private String userName;
+    
+    private String description;
+    
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName == null ? null : userName.trim();
-	}
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
 
-	public Integer getManagerId() {
-		return managerId;
-	}
+    public Integer getManagerId() {
+        return managerId;
+    }
 
-	public void setManagerId(Integer managerId) {
-		this.managerId = managerId;
-	}
-	
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+    
 }

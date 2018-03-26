@@ -8,24 +8,24 @@ import java.util.List;
  * @date Sep 23, 2016
  */
 public class MnrmpAuditQueryResult {
-	private List<MnrmpManagerAuditsV> auditList;
-	
-	private Integer totalRecordNum;
+    private List<MnrmpManagerAuditsV> auditList;
+    
+    private Integer totalRecordNum;
 
-	public List<MnrmpManagerAuditsV> getAuditList() {
-		return auditList;
-	}
+    public List<MnrmpManagerAuditsV> getAuditList() {
+        return auditList;
+    }
 
-	public void setAuditList(List<MnrmpManagerAuditsV> auditList) {
-		this.auditList = auditList;
-	}
+    public void setAuditList(List<MnrmpManagerAuditsV> auditList) {
+        this.auditList = auditList;
+    }
 
-	public Integer getTotalRecordNum() {
-		return totalRecordNum;
-	}
+    public Integer getTotalRecordNum() {
+        return totalRecordNum;
+    }
 
-	public void setTotalRecordNum(Integer totalRecordNum) {
-		this.totalRecordNum = totalRecordNum;
-	}
-	
+    public void setTotalRecordNum(Integer totalRecordNum) {
+        this.totalRecordNum = totalRecordNum;
+    }
+    
 }
